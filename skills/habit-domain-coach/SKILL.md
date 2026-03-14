@@ -1,5 +1,7 @@
 # Skill: Habit Domain Coach
 
+**Agent constraints:** Follow [safety-rules.md](./safety-rules.md) in this folder. Do not change production or break existing features.
+
 ## Purpose
 
 Support the design and evolution of the **AI-Powered Habit Tracker API**, ensuring:

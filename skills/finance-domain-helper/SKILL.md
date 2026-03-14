@@ -1,5 +1,7 @@
 # Skill: Finance Domain Helper
 
+**Agent constraints:** Follow [safety-rules.md](./safety-rules.md) in this folder. Do not change production or break existing features.
+
 ## Purpose
 
 Support the design and evolution of the **Personal Finance Snapshot API**, ensuring:

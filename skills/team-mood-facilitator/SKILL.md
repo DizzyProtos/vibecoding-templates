@@ -1,5 +1,7 @@
 # Skill: Team Mood Facilitator
 
+**Agent constraints:** Follow [safety-rules.md](./safety-rules.md) in this folder. Do not change production or break existing features.
+
 ## Purpose
 
 Support the design and evolution of the **Team Mood & Check-In API** domain model, ensuring:

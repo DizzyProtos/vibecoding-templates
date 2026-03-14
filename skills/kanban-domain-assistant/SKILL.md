@@ -1,5 +1,7 @@
 # Skill: Kanban Domain Assistant
 
+**Agent constraints:** Follow [safety-rules.md](./safety-rules.md) in this folder. Do not change production or break existing features.
+
 ## Purpose
 
 Assist with the design and evolution of the **Minimal Kanban/Task Board backend**, focusing on:

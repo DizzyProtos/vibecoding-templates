@@ -1,5 +1,7 @@
 # Skill: Micro-Journal Prompt Curator
 
+**Agent constraints:** Follow [safety-rules.md](./safety-rules.md) in this folder. Do not change production or break existing features.
+
 ## Purpose
 
 Guide the design and curation of micro-journal prompts for the **Micro-Journal Prompt Generator API**, ensuring that prompts are:

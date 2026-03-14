@@ -16,7 +16,8 @@ Each project has:
 
 - A recommended **architecture and folder structure**.
 - Expected **MCP integrations** (database + at least one external service).
-- One or more **Cursor skills** capturing domain knowledge.
+- One or more **Cursor skills** capturing domain knowledge (in `skills/<project>/SKILL.md`).
+- **Safety rules** (in `skills/<project>/safety-rules.md`) that the agent must follow: no production changes, no breaking existing features; apply these whenever working on that project.
 
 ---
 
@@ -250,5 +251,5 @@ Build an API for events with capacity, attendee registration, and waitlist; opti
 - When integrating MCP:
   - Place DB-related code under `src/infrastructure/db`.
   - Place external integrations (email, Slack, HTTP APIs, calendar, quotes, filesystem) under `src/infrastructure/messaging`, `src/infrastructure/sync`, or `src/infrastructure/external`.
-- Use the provided skills in `skills/` to guide domain modeling, naming, and test scenario design.
+- Use the provided skills in `skills/` to guide domain modeling, naming, and test scenario design. For each project, also apply the corresponding `skills/<project>/safety-rules.md`: no production changes, no breaking existing features.
 
