@@ -242,6 +242,91 @@ Build an API for events with capacity, attendee registration, and waitlist; opti
 
 ---
 
+## Meme & Fun Projects
+
+These projects are intentionally playful but still follow the same clean architecture and TypeScript/Node conventions as the main workshop ideas. Treat them as API backends you can scaffold quickly for hacky vibes or late-night demos.
+
+### Waifu Image Generator API (OpenAI-powered)
+
+Build an API that lets users define their "ideal waifu" via traits, then generates and stores image prompts and metadata using OpenAI (or a generic image-generation MCP).
+
+#### Architecture & Rules
+
+- Key entities:
+  - `WaifuProfile`: `id`, `userId`, `name`, `traits: string[]`, optional `backstory`, `createdAt`.
+  - `WaifuImageRequest`: `id`, `profileId`, `prompt`, `stylePreset`, `status` (`pending`, `completed`, `failed`), `requestedAt`.
+  - `WaifuImage`: `id`, `requestId`, `imageUrl` or `imageId`, `provider`, `createdAt`, optional `nsfwFlag`.
+- Endpoints (MVP):
+  - `POST /waifus` – create or update a waifu profile with traits and optional backstory.
+  - `GET /waifus/:id` – fetch a profile plus its latest image metadata.
+  - `POST /waifus/:id/generate-image` – enqueue an image generation request (no direct provider calls in controllers).
+  - `GET /waifu-images/:id` – fetch generated image metadata.
+- Rules:
+  - All prompt-building, style selection, and safety checks live in a domain service (for example, `waifuImageService`) under `src/domain/services`.
+  - Actual OpenAI/MCP calls live under `src/infrastructure/external` (for example, `openAiImageClient`), behind interfaces so they can be mocked in tests.
+  - Apply basic content-safety filtering in the domain layer before dispatching to providers; controllers must not bypass these checks.
+
+#### Testing Expectations
+
+- Tests for prompt-building logic given different trait combinations and style presets.
+- Tests ensuring NSFW/safety flags are set correctly based on traits, tags, or other inputs.
+- Tests that controllers never call the OpenAI client directly (only the domain service).
+
+---
+
+### Wasted Time Tracker API
+
+Build an API that lets users start a "wasted time" session, tracks elapsed minutes, and returns playful, alternative uses of that time.
+
+#### Architecture & Rules
+
+- Key entities:
+  - `WasteSession`: `id`, `userId`, `startedAt`, optional `endedAt`, derived `durationMinutes`, optional `activityLabel`.
+  - `AlternativeUse`: `id`, `description`, `minutesRequiredMin`, `minutesRequiredMax`, optional `category`.
+- Endpoints (MVP):
+  - `POST /waste-sessions/start` – start a new session for a user.
+  - `POST /waste-sessions/:id/stop` – stop a session and record `endedAt`.
+  - `GET /waste-sessions/:id` – fetch a session with computed `durationMinutes`.
+  - `GET /waste-sessions/:id/alternatives` – return fun suggestions for what that time could have been used for, based on duration.
+- Rules:
+  - Duration computation and mapping from `durationMinutes` to `AlternativeUse` suggestions live in a domain service (for example, `wasteSessionService`) under `src/domain/services`.
+  - Use a clock abstraction for current time so tests can inject fixed timestamps; avoid calling `Date.now()` directly in domain services.
+  - Store suggestions via a repository or configuration; avoid hard-coding large suggestion lists in controllers.
+
+#### Testing Expectations
+
+- Tests for duration calculation with different `startedAt` and `endedAt` combinations and edge cases (very short and very long sessions).
+- Tests for suggestion selection logic for short versus long sessions and for different categories.
+- Tests ensuring a session cannot be stopped twice or started while another active session exists for the same user (if modeled).
+
+---
+
+### Mortality Countdown API (Countdown to Age 80)
+
+Build an API that, given a user’s current age or birthdate, estimates the time until they are 80 years old and exposes it as a countdown.
+
+#### Architecture & Rules
+
+- Key entities:
+  - `MortalityProfile`: `id`, `userId`, either `birthDate` or `ageYears`, `createdAt`, optional `timezone`.
+  - `CountdownSnapshot`: not persisted; derived object with `yearsLeft`, `daysLeft`, `hoursLeft`, `secondsLeft` at a given `asOf` timestamp.
+- Endpoints (MVP):
+  - `POST /mortality-profiles` – create or update a mortality profile from age or birthdate.
+  - `GET /mortality-profiles/:userId` – fetch profile details.
+  - `GET /mortality-profiles/:userId/countdown` – return a `CountdownSnapshot` relative to now (or an optional `asOf` query parameter).
+- Rules:
+  - All date math, age calculation, and countdown logic live in a pure domain service (for example, `mortalityCountdownService`) under `src/domain/services`.
+  - Use a clock abstraction for "now" so tests are deterministic and do not rely on real-time progression.
+  - Clamp negative remaining time to zero and optionally expose a `pastEighty: boolean` flag when the user is already past 80.
+
+#### Testing Expectations
+
+- Tests for countdown calculations around boundary conditions (just before and just after the 80th birthday).
+- Tests for timezone-aware behavior if timezones are used (for example, users close to date boundaries).
+- Tests ensuring past-80 profiles do not produce negative values and that the `pastEighty` flag is set correctly.
+
+---
+
 ## Cursor-Specific Guidance
 
 - When adding new endpoints:
