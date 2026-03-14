@@ -1,6 +1,6 @@
 # Vibecoding Workshop Templates
 
-This repository contains **seven project ideas** and Cursor configuration (rules + skills) for building **2–3 hour MVPs** in a vibecoding workshop. Each project is a Node.js/TypeScript API with clear architecture, domain guidance, and optional MCP integrations.
+This repository contains **seven core project ideas** plus a set of **meme & fun bonus projects**, along with Cursor configuration (rules + skills) for building **2–3 hour MVPs** in a vibecoding workshop. Each project is a Node.js/TypeScript API with clear architecture, domain guidance, and optional MCP integrations.
 
 ---
 
@@ -11,7 +11,7 @@ This repository contains **seven project ideas** and Cursor configuration (rules
 | **`RULE.md`** | Project-wide Cursor rules: shared conventions, folder layout, and per-project architecture (entities, endpoints, testing). |
 | **`skills/`** | One Cursor skill per project. Each skill encodes domain knowledge, API design, and test guidance so the agent stays on-spec. |
 
-### The 7 project ideas
+### The 7 core project ideas
 
 1. **Team Mood & Check-In API** — Daily check-ins, mood scores, team summaries  
 2. **Minimal Kanban/Task Board Backend** — Projects, columns, tasks, workflow (todo → doing → done)  
@@ -22,6 +22,16 @@ This repository contains **seven project ideas** and Cursor configuration (rules
 7. **Event RSVP & Waitlist Service** — Events, capacity, registration, waitlist, promote  
 
 Details for each (entities, endpoints, testing) are in **`RULE.md`** and in the matching skill under **`skills/`**.
+
+### Meme & fun bonus projects
+
+These are extra, playful APIs you can use for late-night vibecoding or as light-hearted workshop options:
+
+1. **Waifu Image Generator API** — Define your “ideal waifu” and generate image prompts/metadata via OpenAI or another image MCP  
+2. **Wasted Time Tracker API** — Start/stop “wasted time” sessions and get playful suggestions for what you could have done instead  
+3. **Mortality Countdown API** — Input age or birthdate and get a countdown until age 80 (dark humor, technically correct date math)  
+
+Architecture, entities, endpoints, and test expectations for these are in the **“Meme & Fun Projects”** section of `RULE.md`, with matching skills under `skills/`.
 
 ---
 
@@ -54,7 +64,7 @@ To use a skill for a workshop project:
 - **Copy the skill** into your app: e.g. `your-app/.cursor/skills/team-mood-facilitator/` with the same `SKILL.md` content. Cursor will load it for that project.
 - **Or reference this repo:** Open this repo in Cursor and type **`/team-mood-facilitator`** (or the skill folder name) in Agent chat when working on the Team Mood API. The agent will use that skill’s guidance.
 
-Skill names match the folder names, e.g. `team-mood-facilitator`, `kanban-domain-assistant`, `micro-journal-prompt-curator`, `habit-domain-coach`, `content-curation-summarization`, `finance-domain-helper`, `event-rsvp-domain`.
+Skill names match the folder names, e.g. `team-mood-facilitator`, `kanban-domain-assistant`, `micro-journal-prompt-curator`, `habit-domain-coach`, `content-curation-summarization`, `finance-domain-helper`, `event-rsvp-domain`, plus meme/fun skills like `waifu-image-generator`, `wasted-time-tracker`, and `mortality-countdown`.
 
 ### 4. Optional: MCP
 
